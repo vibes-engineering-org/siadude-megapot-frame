@@ -12,8 +12,6 @@ export default function Frame() {
   useEffect(() => {
     if (sdk && forwardUrl) {
       sdk.actions.openUrl(forwardUrl);
-    } else {
-      window.location.replace(forwardUrl);
     }
   }, [sdk]);
 
