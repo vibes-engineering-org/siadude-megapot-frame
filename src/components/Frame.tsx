@@ -3,7 +3,8 @@
 import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { configureChains, createConfig, WagmiConfig, useConnect } from "wagmi";
-import { publicProvider } from "wagmi/providers/public";
+import { InjectedConnector } from "wagmi/connectors/injected";
+import { publicProvider } from "@wagmi/providers/public";
 import { base, baseSepolia } from "viem/chains";
 
 const queryClient = new QueryClient();
@@ -14,6 +15,7 @@ const { chains, publicClient } = configureChains(
 
 const wagmiConfig = createConfig({
   autoConnect: true,
+  connectors: [new InjectedConnector({ chains })],
   publicClient,
 });
 
