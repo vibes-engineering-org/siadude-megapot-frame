@@ -3,7 +3,7 @@
 import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { configureChains, createConfig, WagmiConfig, useConnect } from "wagmi";
-import { publicProvider } from "viem/providers/public";
+import { publicProvider } from "wagmi/providers/public";
 import { base, baseSepolia } from "viem/chains";
 
 const queryClient = new QueryClient();
