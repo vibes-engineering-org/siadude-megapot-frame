@@ -1,42 +1,32 @@
 "use client";
 
-import React from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { configureChains, createConfig, WagmiConfig, useConnect } from "wagmi";
-import { InjectedConnector } from "wagmi/connectors/injected";
-import { publicProvider } from "@wagmi/providers/public";
-import { base, baseSepolia } from "viem/chains";
+import React, { useEffect } from "react";
+import { useFrameSDK } from "~/hooks/useFrameSDK";
+import { Button } from "./ui/button";
 
-const queryClient = new QueryClient();
-const { chains, publicClient } = configureChains(
-  [base, baseSepolia],
-  [publicProvider()]
-);
-
-const wagmiConfig = createConfig({
-  autoConnect: true,
-  connectors: [new InjectedConnector({ chains })],
-  publicClient,
-});
+const forwardUrl = "https://megapot.io?referral=kQifFxRm";
 
 export default function Frame() {
-  const { connectors } = useConnect();
+  const { sdk } = useFrameSDK();
+
+  useEffect(() => {
+    if (sdk && forwardUrl) {
+      sdk.actions.openUrl(forwardUrl);
+    } else {
+      window.location.replace(forwardUrl);
+    }
+  }, [sdk]);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <WagmiConfig config={wagmiConfig}>
-        <div className="flex flex-col items-center justify-center p-4 space-y-4">
-          {connectors.map((connector) => (
-            <button
-              key={connector.id}
-              onClick={() => connector.connect()}
-              className="px-4 py-2 bg-blue-500 text-white rounded"
-            >
-              Connect {connector.name}
-            </button>
-          ))}
-        </div>
-      </WagmiConfig>
-    </QueryClientProvider>
+    <div className="container flex flex-col mx-auto p-6 max-w-lg gap-4">
+      <p className="text-center ">Redirecting to {forwardUrl}</p>
+      <Button
+        className="text-2xl font-bold"
+        size="lg"
+        onClick={() => window.location.replace(forwardUrl)}
+      >
+        Continue
+      </Button>
+    </div>
   );
 }
