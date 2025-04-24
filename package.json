@@ -51,7 +51,6 @@
     "@supabase/supabase-js": "^2.49.4",
     "@tanstack/react-query": "^5.74.4",
     "@upstash/redis": "^1.34.5",
-    "@wagmi/core": "^2.17.0",
     "bs58": "^6.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
